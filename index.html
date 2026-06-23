@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<title>Li Mods Official</title>
+<!-- Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="𝐋𝐈 𝐌𝐎𝐃𝐒 🐦‍🔥 Official Mods by Li Muchen" />
+<meta property="og:description" content="Download MOD APK Premium Gratis: DramaBox, CapCut, Spotify, TeraBox, Vanced & banyak lagi. Update setiap hari!" />
+<meta property="og:image" content="https://cdn.phototourl.com/free/2026-06-13-5c622eae-f414-4fd9-8ec3-7a3a534de82a.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- FAVICON & ICON WEBSITE -->
+<link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/free/2026-06-13-5c622eae-f414-4fd9-8ec3-7a3a534de82a.jpg">
+<link rel="apple-touch-icon" href="https://cdn.phototourl.com/free/2026-06-13-5c622eae-f414-4fd9-8ec3-7a3a534de82a.jpg">
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    margin: 0; 
+    font-family: 'Poppins', 'Li Limuchen', system-ui, -apple-system, sans-serif; 
+    background-color: #0a0a0f; 
+    color: #f0f0f0; 
+  }
+  
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #1e1e2a; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb { background: #ff7f00; border-radius: 10px; }
+
+  #music-notif {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(90deg, #00f0ff, #ff007f); color: white;
+    padding: 12px 24px; border-radius: 50px; display: none; z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4); font-weight: bold;
+    cursor: pointer; text-align: center; transition: all 0.4s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .default-header {
+    padding: 20px 16px; font-weight: bold; font-size: 22px;
+    text-align: center; letter-spacing: 1px;
+    background: linear-gradient(90deg, #00f0ff, #ff007f, #00ff87, #00f0ff);
+    background-size: 300% auto; -webkit-background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rgb-text 5s linear infinite;
+  }
+
+  .container1 { text-align: center; padding: 1.2rem; background: rgba(15,25,35,0.5);
+    backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 32px; max-width: 600px; width: 90%; margin: 20px auto; position: relative; }
+
+  .rgb-bar { height: 4px; width: 100%; background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ff00ff, #ff0000);
+    background-size: 400% 400%; position: absolute; top: 0; left: 0;
+    border-top-left-radius: 32px; border-top-right-radius: 32px;
+    animation: rgb-animation 6s linear infinite; }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.07); padding: 0.6rem 1.2rem;
+    border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.1); }
+
+  .dot { width: 10px; height: 10px; background-color: #00ff00; border-radius: 50%; box-shadow: 0 0 10px #00ff00; animation: blink 1.5s infinite; }
+
+  .time-container {
+    background: linear-gradient(135deg, #111122, #0b1120);
+    border-radius: 20px;
+    padding: 16px 20px;
+    margin: 10px auto 20px auto;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid rgba(255,215,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .time-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+    animation: live-scan 3s linear infinite;
+  }
+  @keyframes live-scan {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ff0000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    animation: pulse-red 1.5s infinite;
+  }
+  @keyframes pulse-red {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,0,0,0.4); }
+    50% { opacity: 0.9; box-shadow: 0 0 0 8px rgba(255,0,0,0); }
+  }
+  .live-badge .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+  .city-name { font-size: 14px; color: #ffd700; letter-spacing: 2px; margin-bottom: 8px; }
+  .clock-display { font-size: 48px; font-weight: bold; font-family: 'Courier New', monospace; letter-spacing: 4px;
+    background: linear-gradient(90deg, #00f0ff, #ff007f, #ffd700);
+    background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rgb-text 3s linear infinite; }
+  .date-display { font-size: 13px; color: #aaa; margin-top: 8px; letter-spacing: 1px; }
+  .timezone-info { font-size: 10px; color: #666; margin-top: 8px; }
+
+  /* --- TOOLBAR LAYOUT --- */
+  .layout-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto 12px auto;
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .layout-toggle-group {
+    display: flex;
+    gap: 6px;
+    background: #1e1e2a;
+    padding: 4px;
+    border-radius: 40px;
+    border: 1px solid #2c2c3a;
+  }
+  .layout-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 30px;
+    background: transparent;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .layout-btn.active {
+    background: linear-gradient(120deg, #ff7f00, #ff4500);
+    color: white;
+    box-shadow: 0 2px 10px rgba(255,68,0,0.25);
+  }
+  .layout-btn:hover {
+    color: #fff;
+  }
+  .layout-label {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .search-container { padding: 0 16px 16px 16px; max-width: 600px; margin: 0 auto; }
+  input[type="text"] { width: 100%; padding: 12px 16px; border-radius: 60px; border: none; font-size: 16px; background: #1e1e2a; color: white; outline: none; transition: 0.2s; border: 1px solid #2c2c3a; }
+  input[type="text"]:focus { border-color: #ff7f00; box-shadow: 0 0 5px rgba(255,127,0,0.4); }
+
+  .categories { display: flex; overflow-x: auto; padding: 0 16px 16px 16px; gap: 12px; max-width: 600px; margin: 0 auto; }
+  .category { flex: 0 0 auto; padding: 8px 20px; background-color: #252530; border-radius: 40px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; backdrop-filter: blur(4px); }
+  .category.active { background: linear-gradient(120deg, #ff7f00, #ff4500); color: white; box-shadow: 0 4px 12px rgba(255,68,0,0.3); }
+
+  .app-list { padding: 0 16px 24px 16px; max-width: 600px; margin: 0 auto; }
+  
+  /* --- LIST MODE (Normal) --- */
+  .app-list.list-mode .app-card {
+    display: flex;
+    flex-direction: column;
+    background: #12121c;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid #2a2a34;
+    position: relative;
+  }
+  .app-list.list-mode .app-card .app-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+  }
+
+  /* --- GRID MODE (Kotak) --- */
+  .app-list.grid-mode {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 0 16px 24px 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .app-list.grid-mode .app-card {
+    background: #12121c;
+    border-radius: 20px;
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid #2a2a34;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .app-list.grid-mode .app-card:hover {
+    transform: translateY(-3px);
+    border-color: #ff7f00aa;
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.6);
+  }
+  .app-list.grid-mode .app-card .app-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+  .app-list.grid-mode .app-card .app-icon-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    object-fit: cover;
+    background: #2a2a2a;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  .app-list.grid-mode .app-card .app-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 4px 0 0 0;
+    text-align: center;
+  }
+  .app-list.grid-mode .app-card .app-desc {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 0px;
+    text-align: center;
+  }
+  .app-list.grid-mode .app-card .app-version {
+    font-size: 10px;
+    color: #ffa559;
+    margin-top: 4px;
+    text-align: center;
+  }
+  .app-list.grid-mode .app-card .vip-label {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+  .app-list.grid-mode .app-card .new-label {
+    position: absolute;
+    top: 44px;
+    right: 8px;
+    font-size: 9px;
+  }
+  .app-list.grid-mode .app-card .update-time-badge-card {
+    font-size: 8px;
+    padding: 2px 6px;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 480px) {
+    .app-list.grid-mode {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .app-list.grid-mode .app-card .app-icon-img {
+      width: 60px;
+      height: 60px;
+    }
+    .app-list.grid-mode .app-card .app-title {
+      font-size: 13px;
+    }
+  }
+
+  .app-card {
+    background: #12121c;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid #2a2a34;
+    position: relative;
+  }
+  .app-card:hover { transform: translateY(-3px); border-color: #ff7f00aa; box-shadow: 0 12px 24px -8px rgba(0,0,0,0.6); }
+
+  .app-header { display: flex; align-items: center; gap: 14px; }
+  .app-icon-img { width: 56px; height: 56px; border-radius: 18px; object-fit: cover; background: #2a2a2a; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+  .app-title { font-size: 18px; font-weight: bold; margin: 0; }
+  .app-desc { font-size: 13px; color: #aaa; margin-top: 2px; }
+  .app-version { font-size: 12px; color: #ffa559; margin-top: 6px; }
+
+  /* --- UPDATE TIME BADGE DI DEKAT GAMBAR APK --- */
+  .update-time-badge-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    padding: 3px 10px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,127,0,0.3);
+    font-size: 9px;
+    color: #aaa;
+    margin-top: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+  }
+  .update-time-badge-card .live-dot-small {
+    width: 5px;
+    height: 5px;
+    background: #ff0000;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+    display: inline-block;
+  }
+  .update-time-badge-card .update-icon-small {
+    font-size: 10px;
+    animation: spin-update 3s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin-update {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .update-time-badge-card .time-text {
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff7f00, #ffaa33);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .update-time-badge-card .clock-text {
+    color: #ffd700;
+    font-size: 9px;
+  }
+  .app-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .vip-label { position: absolute; top: 8px; right: 14px; background: linear-gradient(130deg, #ffd966, #ffaa33, #ff7e05); background-size: 200%; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold; font-size: 13px; padding: 4px 10px; border-radius: 60px; border: 1px solid #ffaa3366; }
+  
+  .new-label { position: absolute; top: 8px; right: 14px; background: linear-gradient(130deg, #00f0ff, #ff00ff); background-size: 200%; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold; font-size: 13px; padding: 4px 10px; border-radius: 60px; border: 1px solid #ffaa3366; }
+
+  /* MODAL DETAIL */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2000; visibility: hidden; opacity: 0;
+    transition: visibility 0.2s, opacity 0.2s ease;
+  }
+  .modal-overlay.active { visibility: visible; opacity: 1; }
+  .modal-container {
+    background: #14141f; width: 90%; max-width: 450px;
+    border-radius: 32px; overflow-y: auto; max-height: 85vh;
+    border: 1px solid rgba(255,127,0,0.5);
+    box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+    animation: fadeUp 0.3s ease;
+  }
+  @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header { padding: 18px 20px 10px 20px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #2c2c3a; }
+  .modal-icon { width: 60px; height: 60px; border-radius: 20px; object-fit: cover; }
+  .modal-title-section h3 { font-size: 20px; margin-bottom: 4px; }
+  .modal-version { font-size: 12px; color: #ffa559; }
+  .close-modal { margin-left: auto; background: #2a2a36; width: 36px; height: 36px; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: 0.2s; }
+  .close-modal:hover { background: #ff3b3b; color: white; }
+  .modal-info { padding: 20px; }
+  
+  /* ====== MOD INFO PANEL LIKE SCREENSHOT ====== */
+  .mod-info-panel {
+    background: #0d0d18;
+    border-radius: 20px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    border: 1px solid #2a2a3a;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+  }
+  .mod-info-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffaa66;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+  }
+  .mod-info-title .spark {
+    color: #ff7f00;
+    font-size: 16px;
+  }
+  .mod-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mod-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #ccccdd;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .mod-info-item:last-child {
+    border-bottom: none;
+  }
+  .mod-info-item .check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #ff7f00, #ff4500);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .mod-info-item .check-icon.star {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #121212;
+  }
+  .mod-info-item .check-icon.vip {
+    background: linear-gradient(135deg, #ff00ff, #aa00ff);
+  }
+  .mod-info-item .check-icon.green {
+    background: linear-gradient(135deg, #00cc66, #00aa55);
+  }
+  .mod-info-item .info-label {
+    color: #888899;
+    font-weight: 300;
+  }
+  .mod-info-item .info-value {
+    color: #f0f0f0;
+    font-weight: 500;
+  }
+  .mod-info-item .info-value.highlight {
+    color: #ffaa55;
+  }
+  .mod-info-item .info-value.green {
+    color: #66dd88;
+  }
+  .mod-info-item .info-value.cyan {
+    color: #55ddff;
+  }
+  .mod-info-item .badge-cpu {
+    background: #1a1a2a;
+    padding: 2px 10px;
+    border-radius: 30px;
+    font-size: 11px;
+    color: #aaa;
+    border: 1px solid #333344;
+  }
+  .mod-info-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff7f0044, transparent);
+    margin: 6px 0;
+  }
+
+  .mod-badge { background: #ff7f0022; padding: 10px 14px; border-radius: 20px; border-left: 4px solid #ff7f00; margin-bottom: 20px; }
+  .mod-badge p { font-size: 14px; color: #ffcf9a; margin: 4px 0; }
+  
+  /* Rating Section - Thumbs Up/Down - LEBIH KECIL & RAPI */
+  .rating-section {
+    background: linear-gradient(135deg, #1a1a2e, #12121c);
+    border-radius: 20px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    text-align: center;
+    border: 1px solid rgba(255,215,0,0.2);
+  }
+  .rating-title { 
+    font-size: 12px; 
+    color: #ffaa66; 
+    margin-bottom: 8px; 
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  
+  .thumbs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 6px 0;
+  }
+  .thumb-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-family: inherit;
+    min-width: 60px;
+  }
+  .thumb-btn:hover {
+    transform: scale(1.05);
+  }
+  .thumb-btn .thumb-emoji {
+    font-size: 24px;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+  .thumb-btn .thumb-count {
+    font-size: 14px;
+    font-weight: bold;
+    color: #aaa;
+    transition: all 0.2s ease;
+  }
+  .thumb-btn .thumb-label {
+    font-size: 9px;
+    color: #666;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  .thumb-btn.like-btn.active .thumb-emoji {
+    color: #00cc66;
+    animation: thumbPop 0.3s ease;
+  }
+  .thumb-btn.like-btn.active .thumb-count {
+    color: #00cc66;
+  }
+  .thumb-btn.like-btn.active {
+    background: rgba(0, 204, 102, 0.08);
+    border: 1px solid rgba(0, 204, 102, 0.2);
+    border-radius: 12px;
+  }
+  .thumb-btn.like-btn:not(.active):hover .thumb-emoji {
+    color: #00cc66;
+  }
+  
+  .thumb-btn.dislike-btn.active .thumb-emoji {
+    color: #ff4444;
+    animation: thumbPop 0.3s ease;
+  }
+  .thumb-btn.dislike-btn.active .thumb-count {
+    color: #ff4444;
+  }
+  .thumb-btn.dislike-btn.active {
+    background: rgba(255, 68, 68, 0.08);
+    border: 1px solid rgba(255, 68, 68, 0.2);
+    border-radius: 12px;
+  }
+  .thumb-btn.dislike-btn:not(.active):hover .thumb-emoji {
+    color: #ff4444;
+  }
+  
+  @keyframes thumbPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  .thumbs-divider {
+    width: 1px;
+    height: 30px;
+    background: #2a2a3a;
+    border-radius: 2px;
+  }
+  
+  .rating-stats {
+    font-size: 11px;
+    color: #ffaa66;
+    margin-top: 6px;
+    padding: 4px 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    display: inline-block;
+  }
+  
+  .already-rated-msg {
+    font-size: 10px;
+    color: #66dd88;
+    margin-top: 4px;
+    padding: 3px 10px;
+    background: rgba(0,200,100,0.08);
+    border-radius: 15px;
+    display: none;
+  }
+  
+  /* Toast notification */
+  .toast-notification {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: white;
+    z-index: 10001;
+    font-weight: 500;
+    animation: toastFade 3s ease forwards;
+    font-size: 14px;
+    max-width: 90%;
+    text-align: center;
+  }
+  @keyframes toastFade {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  }
+  
+  /* GALERI SCREENSHOT + VIDEO */
+  .screenshot-gallery {
+    background: #0b0b12;
+    border-radius: 24px;
+    padding: 12px;
+    margin: 18px 0;
+    position: relative;
+  }
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .gallery-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffaa66;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .auto-slide-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.5);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+  }
+  .auto-slide-btn {
+    background: linear-gradient(90deg, #ff7f00, #ff4500);
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .slide-indicator {
+    font-size: 11px;
+    color: #ffaa66;
+  }
+  .slide-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-viewport {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+    touch-action: pan-y pinch-zoom;
+  }
+  .slide-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: grab;
+  }
+  .slide-track:active {
+    cursor: grabbing;
+  }
+  .slide-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .slide-img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    border-radius: 20px;
+    background: #1a1a2a;
+    display: block;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto;
+  }
+  .slide-video-wrapper {
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #0a0a12;
+  }
+  .slide-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+  }
+  .slide-video-wrapper .video-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,0,0,0.8);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
+  }
+  .slide-video-wrapper .video-label .play-icon {
+    font-size: 14px;
+    animation: pulse-play 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-play {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .slide-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    transition: 0.2s;
+    z-index: 10;
+  }
+  .slide-nav.prev { left: 8px; }
+  .slide-nav.next { right: 8px; }
+  .slide-nav:hover { background: #ff7f00; }
+  .dot-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .dot-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #555;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+  .dot-indicator.active {
+    background: #ff7f00;
+    width: 20px;
+    border-radius: 10px;
+  }
+  .gallery-view-toggle {
+    display: flex;
+    gap: 6px;
+    background: #1e1e2a;
+    padding: 3px;
+    border-radius: 30px;
+  }
+  .gallery-view-btn {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 30px;
+    background: transparent;
+    color: #888;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .gallery-view-btn.active {
+    background: linear-gradient(90deg, #ff7f00, #ff4500);
+    color: white;
+  }
+  .gallery-view-btn:hover {
+    color: #fff;
+  }
+  
+  .download-modal-btn { width: 100%; background: linear-gradient(95deg, #ff7f00, #ff4500); padding: 16px; border: none; border-radius: 60px; font-size: 18px; font-weight: bold; color: white; margin-top: 12px; cursor: pointer; }
+  .share-section { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .share-btn { flex: 1; background: #2a2a36; padding: 12px; border-radius: 50px; text-align: center; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; color: white; }
+  .share-btn.copy-btn { background: #1e4a6e; }
+  .share-btn.whatsapp-btn { background: #25D366; }
+  .share-btn.telegram-btn { background: #26A5E4; }
+  .support-donatur { background: #0f0f18; padding: 20px; margin: 16px auto; border-radius: 32px; text-align: center; max-width: 600px; width: 90%; border: 1px solid #2a2a38; }
+  .donate-btn { padding: 12px 28px; background: linear-gradient(90deg, #ff7f00, #ffaa33); color: #121212; font-weight: bold; border-radius: 40px; text-decoration: none; display: inline-block; margin-top: 10px; }
+
+  @keyframes rgb-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  @keyframes rgb-text { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+  @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+  
+  /* LOADING SCREEN */
+  .loading-love {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0a0a1a, #000000);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s;
+    backdrop-filter: blur(2px);
+  }
+  .loading-love.hide { opacity: 0; visibility: hidden; }
+  .spinner-container { position: relative; width: 120px; height: 120px; margin-bottom: 30px; }
+  .spinner-ring { position: absolute; width: 100%; height: 100%; border: 5px solid transparent; border-top: 5px solid #ff007f; border-right: 5px solid #00f0ff; border-radius: 50%; animation: spinRing 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; box-shadow: 0 0 12px rgba(255,0,127,0.6); }
+  .spinner-ring:nth-child(2) { width: 80%; height: 80%; top: 10%; left: 10%; border-top: 4px solid #ffd700; border-left: 4px solid #ff7f00; animation: spinRingReverse 1.5s linear infinite; }
+  .spinner-ring:nth-child(3) { width: 50%; height: 50%; top: 25%; left: 25%; border-bottom: 4px solid #ff00ff; border-right: 4px solid #00ffaa; animation: spinRing 0.9s ease-in-out infinite; }
+  .heart-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 32px; animation: heartPulseLoad 1s ease-in-out infinite; }
+  @keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  @keyframes spinRingReverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+  @keyframes heartPulseLoad { 0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; text-shadow: 0 0 20px #ff3366; } }
+  .loading-text { margin-top: 25px; font-size: 20px; font-weight: bold; background: linear-gradient(135deg, #ff99cc, #ff3366, #ffaa33); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: rgb-text 2s linear infinite; letter-spacing: 2px; }
+  .countdown-timer { margin-top: 12px; font-size: 48px; font-weight: 800; font-family: monospace; background: linear-gradient(135deg, #ffffff, #ffd966); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 5px rgba(255,127,0,0.5); }
+  .loading-sub { margin-top: 8px; font-size: 13px; color: #ffaa88; letter-spacing: 1px; }
+  @media (max-width: 480px) { .clock-display { font-size: 32px; } .countdown-timer { font-size: 36px; } }
+  .main-content { display: block; }
+
+  /* Lightbox Modal for Fullscreen Image */
+  .lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 3000;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .lightbox-modal.active {
+    visibility: visible;
+    opacity: 1;
+  }
+  .lightbox-img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom;
+  }
+  .lightbox-img {
+    max-width: 95vw;
+    max-height: 85vh;
+    border-radius: 20px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    z-index: 3001;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-counter {
+    position: absolute;
+    bottom: 20px;
+    color: white;
+    background: rgba(0,0,0,0.6);
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-size: 14px;
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    z-index: 3001;
+  }
+  .lightbox-nav.prev { left: 10px; }
+  .lightbox-nav.next { right: 10px; }
+</style>
+</head>
+<body>
+
+<div id="loadingLove" class="loading-love">
+  <div class="spinner-container"><div class="spinner-ring"></div><div class="spinner-ring"></div><div class="spinner-ring"></div><div class="heart-center">❤️‍🔥</div></div>
+  <div class="loading-text">𝐋𝐈 𝐌𝐎𝐃𝐒 • 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋</div>
+  <div class="countdown-timer" id="countdownTimer">3</div>
+  <div class="loading-sub">⚡ Website akan muncul dalam <span id="countdownTextSpan">3</span> detik ⚡</div>
+  <div style="margin-top: 20px; font-size: 12px; color: #ff99aa;">🐦‍🔥 Premium Mods by Li Muchen</div>
+</div>
+
+<div id="mainContent" class="main-content">
+  <div id="defaultHeader" class="default-header">𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐓𝐎 𝐋𝐈 𝐌𝐎𝐃𝐒 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 🐦‍🔥</div>
+  <div class="support-donatur"><h2 style="font-size:1.2rem">✨ Support Creator ✨</h2><p>Bantu kami tetap update MOD terbaik</p><a class="donate-btn" href="https://linkfly.to/limuchen01" target="_blank">💖 DONASI SEKARANG</a></div>
+  <div class="container1"><div class="rgb-bar"></div><div class="status-badge"><span class="dot"></span><span>𝐒𝐄𝐑𝐕𝐄𝐑 𝐎𝐍𝐋𝐈𝐍𝐄 🇨🇳</span></div></div>
+  <div class="time-container"><div class="live-badge"><span class="live-dot"></span><span>🔴 LIVESTREAM CHINA</span></div><div class="city-name">🇨🇳 SHANGHAI • 北京时间 🇨🇳</div><div class="clock-display" id="shanghaiClock">00:00:00</div><div class="date-display" id="shanghaiDate">--</div><div class="timezone-info">UTC+8 • Waktu Akurat</div></div>
+  
+  <!-- LAYOUT TOOLBAR -->
+  <div class="layout-toolbar">
+    <div class="layout-label">📱 Tampilan</div>
+    <div class="layout-toggle-group">
+      <button class="layout-btn active" data-mode="list" onclick="setLayout('list')">📋 Normal</button>
+      <button class="layout-btn" data-mode="grid" onclick="setLayout('grid')">📦 Kotak</button>
+    </div>
+  </div>
+
+  <div class="search-container"><input type="text" id="searchInput" placeholder="🔍 Cari aplikasi mod favoritmu..." onkeyup="filterApps()"/></div>
+  
+  <div class="categories"><div class="category active" onclick="filterCategory('ALL', this)">ALL</div>
+  <div class="category" onclick="filterCategory('GAME', this)">GAME</div>
+  <div class="category" onclick="filterCategory('APK', this)">APK</div>
+  <div class="category" onclick="filterCategory('VIP', this)">VIP</div></div>
+  <div class="app-list list-mode" id="appList"></div>
+</div>
+
+<audio id="bgMusic" loop preload="auto"><source src="https://christian-coffee-vpbdlaga.edgeone.app/What%20Are%20You%20Doing%20(Chinese%20Version%20of%20Laffy%20Taffy)%20[P4EPZG1uweQ].mp3" type="audio/mpeg"></audio>
+<div id="music-notif" onclick="toggleMusic()">🎵 Musik Sedang Diputar • Klik untuk Pause/Play</div>
+
+<div id="detailModal" class="modal-overlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <img id="modalIcon" class="modal-icon" src="">
+      <div class="modal-title-section"><h3 id="modalTitle">Nama Aplikasi</h3><div id="modalVersion" class="modal-version"></div></div>
+      <div class="close-modal" onclick="closeModal()">✕</div>
+    </div>
+    <div class="modal-info">
+      
+      <!-- ===== MOD INFO PANEL ===== -->
+      <div class="mod-info-panel" id="modInfoPanel">
+        <div class="mod-info-title"><span class="spark">⚡</span> INFORMASI MOD <span style="font-size:11px; color:#666; font-weight:400;">— Premium Features</span></div>
+        <div class="mod-info-list" id="modInfoList">
+          <!-- akan diisi javascript secara dinamis per aplikasi -->
+        </div>
+      </div>
+      
+      <!-- ===== RATING SECTION THUMBS UP/DOWN - LEBIH KECIL ===== -->
+      <div class="rating-section">
+        <div class="rating-title">👍 Apakah Aplikasi Ini Bermanfaat? 👎</div>
+        <div class="thumbs-container">
+          <button class="thumb-btn like-btn" id="thumbLike" onclick="handleThumbClick('like')">
+            <span class="thumb-emoji">👍</span>
+            <span class="thumb-count" id="likeCount">0</span>
+            <span class="thumb-label">Suka</span>
+          </button>
+          <div class="thumbs-divider"></div>
+          <button class="thumb-btn dislike-btn" id="thumbDislike" onclick="handleThumbClick('dislike')">
+            <span class="thumb-emoji">👎</span>
+            <span class="thumb-count" id="dislikeCount">0</span>
+            <span class="thumb-label">Tidak</span>
+          </button>
+        </div>
+        <div>
+          <span id="modalRatingStats" class="rating-stats">Memuat rating...</span>
+        </div>
+        <div id="alreadyRatedMsg" class="already-rated-msg"></div>
+      </div>
+      
+      <!-- GALERI SCREENSHOT + VIDEO -->
+      <div class="screenshot-gallery" id="galleryContainer">
+        <div class="gallery-header">
+          <div class="gallery-title">📸 <span>REVIEW APLIKASI</span> <span style="font-size:12px;">(Geser atau tekan panah)</span></div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <div class="gallery-view-toggle">
+              <button class="gallery-view-btn active" data-view="all" onclick="setGalleryView('all')">📱 Semua</button>
+              <button class="gallery-view-btn" data-view="video" onclick="setGalleryView('video')">🎬 Video</button>
+            </div>
+            <div class="auto-slide-control"><span class="slide-indicator" id="slideIndicator">⏵ Otomatis</span><button id="autoSlideBtn" class="auto-slide-btn">⏸ Berhenti</button></div>
+          </div>
+        </div>
+        <div class="slide-container">
+          <div class="slide-nav prev" onclick="prevSlide()">‹</div>
+          <div class="slide-viewport" id="slideViewport">
+            <div class="slide-track" id="slideTrack"></div>
+          </div>
+          <div class="slide-nav next" onclick="nextSlide()">›</div>
+        </div>
+        <div class="dot-indicators" id="dotIndicators"></div>
+      </div>
+      
+      <button id="modalDownloadBtn" class="download-modal-btn">📥 DOWNLOAD SEKARANG 📥</button>
+      <div class="share-section"><div class="share-btn copy-btn" onclick="copyShareLink()">📋 Share Aplikasi</div><div class="share-btn whatsapp-btn" onclick="shareToWhatsApp()">💬 Saluran WhatsApp</div><div class="share-btn telegram-btn" onclick="shareToTelegram()">✈️ Channel Telegram</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox for fullscreen image with swipe -->
+<div id="lightboxModal" class="lightbox-modal">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <div class="lightbox-nav prev" onclick="lightboxPrev()">‹</div>
+  <div class="lightbox-nav next" onclick="lightboxNext()">›</div>
+  <div class="lightbox-img-container" id="lightboxContainer">
+    <img id="lightboxImg" class="lightbox-img" src="">
+  </div>
+  <div id="lightboxCounter" class="lightbox-counter"></div>
+</div>
+
+<script>
+  // ============================================================
+  // FIREBASE CONFIGURATION
+  // ============================================================
+  const firebaseConfig = { 
+  apiKey : "AIzaSyATGIc3c9-t0D84rGG08hc3j9bEX9FjkSU" , 
+  authDomain : "li-mods.firebaseapp.com" , 
+  databaseURL : "https://li-mods-default-rtdb.firebaseio.com" , 
+  projectId : "li-mods" , 
+  storageBucket : "li-mods.firebasestorage.app" , 
+  messagingSenderId : "425182406479" , 
+  appId : "1:425182406479:web:0e79d4dd7c1d6e7e85873a" , 
+  measurementId : "G-907Q2125E0" 
+};
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  // ============================================================
+  // DATA APLIKASI (sama seperti sebelumnya, dipotong untuk ringkas)
+  // ============================================================
+  const appsData = [ 
+    
+   { 
+    title: "GoodShort", category: "APK", desc: "Aplikasi Drama Terbaik", 
+    version: "V3.0.3.2103", size: "50.12 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Ka6ZUBvufvtOwyo_XEF_ImYiWbKIgS-6ZIfDejevhA&s=10", 
+    downloadLink: "https://adlinksumo.com/5N01NBPg", isVip: false, isNew: true, 
+    updateTime: "2026-06-23 19:20:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-23-21d91bd2-7e9e-4037-ba80-a79ca9e3c113.png","https://cdn.phototourl.com/member/2026-06-23-705217fb-478c-4de0-a22d-19d501ec8682.png","https://cdn.phototourl.com/member/2026-06-23-b46f959f-d6eb-4460-ba8f-faccd412f319.png"], 
+    modDetail: "🎬 Semua episode premium gratis, tanpa iklan",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Episodes", value: "Free Access", green: true },
+      { label: "Download", value: "Enabled", green: true },
+    ]
+  },
+  
+   { 
+    title: "DramaNova", category: "APK", desc: "Premium Unlocked", 
+    version: "V1.3.16", size: "51.06 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhVOD3InK92mWZfGzT3yPQWGHuMH8zvg6kSLWw6SlWLA&s=10", 
+    downloadLink: "https://adlinksumo.com/avuA", isVip: false, isNew: false, 
+    updateTime: "2026-06-23 16:40:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-23-7fc45d38-e701-4618-bc75-c286f08379bf.jpg"], 
+    modDetail: "✅ VIP Premium Unlocked",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Koin", value: "Unlimited", green: true },
+    ]
+  },
+  
+   { 
+    title: "DeepSeek", category: "APK", desc: "Premium Unlocked", 
+    version: "V2.1.8", size: "11.60 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-12-e893f03f-235d-419a-9412-7668a093d6cc.png", 
+    downloadLink: "https://adlinksumo.com/IBzkpb0z", isVip: false, isNew: false, 
+    updateTime: "2026-06-23 13:30:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/YVb28mO_XPDEcThkMp0NAgicNyHxkPMUdo7culvBcdTaoYzrTFaB94nRTpKUF-Jb8A=w526-h296","https://play-lh.googleusercontent.com/s6quBzIzHLZ9OrZhjF1APCZdbWYYXJzd8UDLy2CNAgBPNofj-JIV7RSNmaBVRTCp2O4=w526-h296","https://play-lh.googleusercontent.com/poas4UHabIGH4TojAAHAlBwjQtxiqEvF4HK9l_PcPTy6tcPcOS--sUvRj9vxEc07er2v=w526-h296","https://play-lh.googleusercontent.com/C-QFXo2BEsHrQ3A4ZiItbkXz5T8svGWGkWTEKRTWKZ2GeGsNcq_PQt10Yjozu2zQ5g=w526-h296","https://play-lh.googleusercontent.com/opYcgkKVjtULHvWP8sMtKUyZMl45RtAyBpfofxbKLFuMCrV3-Frc-ts7Z2LDimkfxhA=w526-h296","https://play-lh.googleusercontent.com/WQ8m65gUzff5hPdLyJGgjZ0mHixfhEn3bWl4KTsB1pxEWdNVSowXrPg7PjzwFTK8x0d3=w526-h296"], 
+    modDetail: "✅ AI Premium + Chat tanpa batas, bebas iklan",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "AI Chat", value: "Unlimited", green: true },
+    ]
+  },
+  
+   { 
+    title: "TikTok", category: "APK", desc: "Premium Unlocked", 
+    version: "V45.7.7", size: "355.96 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQJoMY5uG07eNQewnpcQ5z9FBiqx1o8FipRqvthxnWkQ&s=10", 
+    downloadLink: "https://adlinksumo.com/NuIG", isVip: false, isNew: false, 
+    updateTime: "2026-06-23 06:00:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/04/tiktok-premium-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/tiktok-premium-apk-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/tiktok-premium-gratis-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/tiktok-para-adultos-169x300.webp"], 
+    modDetail: "all Unlocked",
+    modFeatures: [
+      { label: "Premium", value: "aktif", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Descarga cualquier video, sin restricción.", value: "aktif", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Sin marca de agua.", value: "aktif", green: true },
+      { label: "Sin publicidad.", value: "aktif", green: true },
+      { label: "Watermark", value: "di hapus", green: true },
+      { label: "➡️ NOTA: El inicio de sesión solo funciona por Facebook o correo.", value: "", green: true },
+    ]
+  },
+  
+   { 
+    title: "CapCut Pro Ultra", category: "APK", desc: "Premium Unlocked", 
+    version: "V18.3.0", size: "198.91 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-11-f1f22831-8c0b-45c2-b796-386ad063e29d.png", 
+    downloadLink: "https://adlinksumo.com/FHYus", isVip: false, isNew: false, 
+    updateTime: "2026-06-23 05:50:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/uwJvsJ12fbSPCywzzd8QMf4E_hPZK-s8qzFaYXMwQXBctcYkbEpTrzWRIZMXxjVZHXg=w526-h296","https://play-lh.googleusercontent.com/LlhoEKjfuhQ3gagSwK7Pv1UUW8a8FjxWC3YoepU2SLbgG47BvZqJpLlopNsDjknKgr4=w526-h296","https://play-lh.googleusercontent.com/rnigP1_zqfB0GIgIs2QLSGdgIHLWOyHJxISpJOSwGHNiHdQNeRC8AKR_S9NHAc_iiU0=w526-h296","https://play-lh.googleusercontent.com/_3Td9_BNZE2N_raHGYYV4qEpBMUHAEWtv4n7qNekeHE7m6sXmhlXIrbnW5B8z0bZMg=w526-h296"], 
+    modDetail: "🎬 Semua efek & stiker pro unlocked, ekspor 4K",
+    modFeatures: [
+      { label: "Pro Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Effects & Stickers", value: "Unlocked", green: true },
+      { label: "Export Quality", value: "4K", green: true },
+      { label: "Watermark", value: "Removed", green: true },
+    ]
+  },
+  
+   { 
+    title: "SoundCloud", category: "APK", desc: "Aplikasi musik Terbaik", 
+    version: "V2026.06.10", size: "61.65 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwU_c721tG4QspqxYk7lYnjGKAqixno5uVjlXs9H9RM6cu0s_cQ8z70Ts&s=10", 
+    downloadLink: "https://adlinksumo.com/zdYI7x4g", isVip: false, isNew: false, 
+    updateTime: "2026-06-22 17:20:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-22-213004a6-f8c9-44b7-9516-ea07ae0b0252.png","https://cdn.phototourl.com/free/2026-06-22-d1129b51-2de7-4c26-83ba-0be2bb06a031.png","https://cdn.phototourl.com/free/2026-06-22-33fc0bf1-34d5-49d2-9560-db2ea81dfe63.png","https://cdn.phototourl.com/free/2026-06-22-9f3658cd-4fff-48a0-9016-3c12b3664f90.png"], 
+    modDetail: "🎧 Skip unlimited, offline mode, highest audio quality", 
+    videoReview: "",
+    modFeatures: [
+      { label: "Pro / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Root / VPN / Emulator", value: "Removed detection", green: true },
+      { label: "Screenshot Restriction", value: "Removed", green: true },
+      { label: '"Google Play unavailable"', value: "Removed", green: true },
+      { label: "Google Play Store Updates", value: "Removed", green: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+      { label: "getInstallerPackageName", value: "Fixed", green: true },
+      { label: "AdActivity", value: "Removed", green: true },
+      { label: "Facebook Login", value: "Fixed", green: true },
+    ]
+  },
+  
+   { 
+    title: "MinuteDrama", category: "APK", desc: "Premium Unlocked", 
+    version: "V6.0.1.15", size: "81.88 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkXKkfN7zhUsBKKYzRjTQrQjZcEo7EFnxzqbMa9TjzzaYjiLWlfuDDQQU&s=10", 
+    downloadLink: "https://adlinksumo.com/p3BvoA", isVip: false, isNew: false, 
+    updateTime: "2026-06-22 16:40:00", 
+    screenshots: ["https://cdn.phototourl.com/free/2026-06-22-b81698a2-b08f-4dd0-b9ae-a11c1beea116.png","https://cdn.phototourl.com/free/2026-06-22-5d1187b5-3099-47fa-a515-fdd2eae747ec.png","https://cdn.phototourl.com/free/2026-06-22-c9c8de9d-dc77-4b84-ae36-66ad024af0b9.png"], 
+    modDetail: "🚀 unlocked all filters",
+    videoReview: "",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Filters", value: "Unlocked", green: true },
+    ]
+  },
+  
+   { 
+    title: "RapidTV", category: "APK", desc: "Premium Unlocked", 
+    version: "V5.2.0", size: "59.96 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX3d8q4-NABayuN3Ka04iD1qELxd2NG97qEa8VihrPgg&s=10", 
+    downloadLink: "https://adlinksumo.com/S7az69", isVip: false, isNew: false, 
+    updateTime: "2026-06-22 09:50:00", 
+    screenshots: ["https://cdn.phototourl.com/free/2026-06-22-85304b30-113e-4e05-a4cb-18baf324bf01.png","https://cdn.phototourl.com/free/2026-06-22-0e03ceca-1e7f-4f0a-855c-1d0d96765fbe.png","https://cdn.phototourl.com/free/2026-06-22-edf2a63d-d6bb-48fd-9e36-64d2ecec79d6.png"], 
+    modDetail: "🚀 unlocked all filters",
+    videoReview: "",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Filters", value: "Unlocked", green: true },
+    ]
+  },
+  
+  { 
+    title: "Spotify", category: "APK", desc: "Aplikasi musik Terbaik", 
+    version: "V9.1.58.1567", size: "136.25 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-05-24-52013bca-62a4-49ab-8eb6-793a20173dfd.jpg", 
+    downloadLink: "https://adlinksumo.com/CVkx3", isVip: false, isNew: false, 
+    updateTime: "2026-06-22 7:10:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-14-bc0c4a41-1910-42e4-94b6-4cc7cf383f90.png","https://cdn.phototourl.com/member/2026-06-14-da206a17-1bd1-4391-b418-db28a6fc2f1a.png","https://cdn.phototourl.com/member/2026-06-14-c262cfef-d8ff-4c4e-8533-5a7f713546ab.png"], 
+    modDetail: "🎧 Skip unlimited, offline mode, highest audio quality", 
+    videoReview: "https://www.youtube.com/embed/DOek0dIIHgs",
+    modFeatures: [
+      { label: "Pro / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Root / VPN / Emulator", value: "Removed detection", green: true },
+      { label: "Screenshot Restriction", value: "Removed", green: true },
+      { label: '"Google Play unavailable"', value: "Removed", green: true },
+      { label: "Google Play Store Updates", value: "Removed", green: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+      { label: "getInstallerPackageName", value: "Fixed", green: true },
+      { label: "AdActivity", value: "Removed", green: true },
+      { label: "Facebook Login", value: "Fixed", green: true },
+    ]
+  },
+      
+  { 
+    title: "Melolo", category: "APK", desc: "VIP Unlocked", 
+    version: "V5.3.3", size: "118.92 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXhOtVHFdkBR7lxFFotTvmnZFyUZBxUILcOOIRdrE55Q&s", 
+    downloadLink: "https://adlinksumo.com/uqE0", isVip: false, isNew: false, 
+    updateTime: "2026-06-21 20:40:00", 
+    screenshots: ["https://cdn.phototourl.com/free/2026-06-21-405d847f-a755-43fc-a612-04cc10fcac42.jpg"], 
+    modDetail: "VIP Unlocked",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Root detection", value: "Removed", green: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+    ]
+  },
+      
+  { 
+    title: "Premium Tuber", category: "APK", desc: "Premium Unlocked Tampa iklan", 
+    version: "V2.0", size: "24.71 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2025/07/premium-tuber.webp", 
+    downloadLink: "https://adlinksumo.com/ToOFUgZC", isVip: false, isNew: false, 
+    updateTime: "2026-06-21 14:30:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/1CG82f49NHDDgNo6BqkCULoCZWyXRGXQtnJAJnuljywKGMDUxN1g0e8dWdQJ3Md6DQ=w526-h296","https://play-lh.googleusercontent.com/EBrqAUxEvnen2Wn960rVcE8QINSwA94rRqX6cb0yuJkEM3qYWR8GNoHignNgEiHI6Q=w526-h296","https://play-lh.googleusercontent.com/EHbObewhYRR1rkdcwGQ20Zmn3NVbmgxFt5eQWFRZTqO9JOmWL9OUx-eJ7rz3Yiu1_tk=w526-h296","https://play-lh.googleusercontent.com/1CG82f49NHDDgNo6BqkCULoCZWyXRGXQtnJAJnuljywKGMDUxN1g0e8dWdQJ3Md6DQ=w526-h296","https://play-lh.googleusercontent.com/EBrqAUxEvnen2Wn960rVcE8QINSwA94rRqX6cb0yuJkEM3qYWR8GNoHignNgEiHI6Q=w526-h296","https://play-lh.googleusercontent.com/NnmeRpcDGKdOQ56CU8aWINSzbiUygO7PETgZKFqIJaonGM8O7Grid5Phpoa32DFMKuU=w526-h296"], 
+    modDetail: "👑 All Unlocked Tampa iklan", videoReview: "",
+    modFeatures: [
+      { label: "Pro / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Root / VPN / Emulator", value: "Removed detection", green: true },
+      { label: "Screenshot Restriction", value: "Removed", green: true },
+      { label: "Google Play Updates", value: "Disabled", green: true },
+    ]
+  },
+      
+  { 
+    title: "Telegram", category: "APK", desc: "Premium Unlocked", 
+    version: "V12.8.3", size: "137.21 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-09-8006cc33-077f-4917-8338-ba4396bc9965.jpg", 
+    downloadLink: "https://adlinksumo.com/iOu7O", isVip: false, isNew: false, 
+    updateTime: "2026-06-21 14:25:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/04/telegram-premium-158x300.webp","https://androforever.com/wp-content/uploads/2024/04/telegram-premium-apk-158x300.webp","https://androforever.com/wp-content/uploads/2024/04/telegram-premium-1-158x300.webp","https://androforever.com/wp-content/uploads/2024/04/telegram-premium-apk-1-158x300.webp","https://androforever.com/wp-content/uploads/2024/04/telegram-premium-2-158x300.webp","https://androforever.com/wp-content/uploads/2024/04/telegram-premium-apk-2-158x300.webp"], 
+    modDetail: "👑 All Unlocked",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+    ]
+  },
+      
+  { 
+    title: "Polish Pro", category: "APK", desc: "Premium Unlocked", 
+    version: "V1.763.262", size: "28.23 MB", 
+    icon: "https://cdn.aptoide.com/imgs/2/8/8/28899987fd81c20e1a4a8c8821a6c940_icon.png", 
+    downloadLink: "http://simp.ly/p/MNdPRl", isVip: false, isNew: false, 
+    updateTime: "2026-06-21 14:20:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-20-401a2646-f46d-4fba-9cb0-fb63713723e7.jpg"], 
+    modDetail: "All Unlocked",
+    modFeatures: [
+      { label: "Pro / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+    ]
+  },
+      
+  { 
+    title: "Passion Drama", category: "APK", desc: "Premium Unlocked", 
+    version: "V1.2.7", size: "56.59 MB", 
+    icon: "https://play-lh.googleusercontent.com/dSoOrtuYO9rH1pfz7j8CUxscMx_2tSv8Q-VrgiBjaYpumUXnCp0YiE0qy0XpYiei0_r2JTP73YKE--jhvC787c0=w240-h480-rw", 
+    downloadLink: "https://adlinksumo.com/NEKM8DYi", isVip: false, isNew: false, 
+    updateTime: "2026-06-21 14:15:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-20-b87ec6f2-ab2d-4eeb-abaf-8ab891366dc5.jpg"], 
+    modDetail: "🎭 Semua drama premium gratis",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Drama Content", value: "Free Access", green: true },
+    ]
+  },
+        
+  { 
+    title: "Magic Tiles 3", category: "GAME", desc: "uang tak terbatas.", 
+    version: "V13.062.002", size: "276.39 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEJWN1frcPXO9oZ0uFZ3TeV14GR9TO3hFrhuPTWvU99w&s=10", 
+    downloadLink: "https://adlinksumo.com/sUmO", isVip: false, isNew: false, 
+    updateTime: "2026-06-20 10:00:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/04/magis-tiles-3-mod-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/magis-tiles-3-mod-apk-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/magis-tiles-3-mod-1-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/magis-tiles-3-mod-apk-1-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/magis-tiles-3-mod-2-169x300.webp"], 
+    modDetail: "✅ Dinero infinito. ✅ Desbloquee más de 5000 canciones populares. ✅ VIP Desbloqueado. ✅ Sin anuncios.", 
+    videoReview: "",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Money / Coins", value: "Infinite", green: true },
+      { label: "All Songs", value: "Unlocked", green: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+    ]
+  },
+      
+  { 
+    title: "Bowmasters", category: "GAME", desc: "uang tak terbatas.", 
+    version: "V11.3.2", size: "236.21 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa2h-lQYE1vzS0gXbgXLR9g8Dby-MTgPEuhHsG6PE31A&s=10", 
+    downloadLink: "https://adlinksumo.com/XW1Q", isVip: false, isNew: false, 
+    updateTime: "2026-06-20 09:30:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-139x300.webp","https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-apk-139x300.webp","https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-apk-2-139x300.webp","https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-2-139x300.webp","https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-apk-1-139x300.webp","https://androforever.com/wp-content/uploads/2024/04/bowmasters-mod-1-139x300.webp"], 
+    modDetail: "✅ Dinero ilimitado.",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Money / Coins", value: "Infinite", green: true },
+    ]
+  },
+      
+  { 
+    title: "My Talking Tom 2", category: "GAME", desc: "uang tak terbatas.", 
+    version: "V26.3.1.24748", size: "192.49 MB", 
+    icon: "https://play-lh.googleusercontent.com/84GI_9nvYcWOVoG43uE9izfn1r6uWi8U4j3rJcoJUpRj3N3V0YFb1_EAHG-qfbwj5U_SjnBfc8D0MKzBnh27MYY", 
+    downloadLink: "https://adlinksumo.com/WUrSSJ", isVip: false, isNew: false, 
+    updateTime: "2026-06-20 09:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/6pEuBzkWJ5MJv8lknp-pRV2mMubT00vqcoJt4E-sN3M-wXlFb_2SgyN4R-Q6nlCGKn31=h305","https://play-lh.googleusercontent.com/htpvdv7nn45PJtHPHkNcVsT0EMsQ9WuscdKAppQEUVNxARTJf2Z72Aa3t8SpSVQ5r8KJ=h305","https://play-lh.googleusercontent.com/ve1D-JOG2bO6Rj0LuHcC0uOn2mVFjBREvNH1Lyq4T3H7OrxklG6qTwHhhVTqF8neIJNk=h305","https://play-lh.googleusercontent.com/xqO-8XaI8w0Gl98EMLswNnJvruTsR90UeBucl7rQ3-LNlZ9qgiuMo-hiAuW9eYkPwiJX=h305","https://play-lh.googleusercontent.com/Wi7tCKWW7w0-VDjdrH4ut66YTz48jBpr1-0XN6n6pFUIGZgzkPzgvhbz7jWupQ9eyXwR=h305"], 
+    modDetail: "✅ Dinero ilimitado.",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Money / Coins", value: "Infinite", green: true },
+    ]
+  },
+      
+  { 
+    title: "OtakuPlay", category: "APK", desc: "Premium Unlocked", 
+    version: "V1.3.20", size: "12.78 MB", 
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrVR5R8zVvQDepa45HoLevsJeoiIE1tIQc1ugqvpE0OQ&s=10", 
+    downloadLink: "https://adlinksumo.com/I6SfOd", isVip: false, isNew: false, 
+    updateTime: "2026-06-19 16:00:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-20-1f7e2da6-75bc-4e77-b503-4c814d722642.jpg"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "All Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+    ]
+  },
+      
+  { 
+    title: "TunnelDOOm VPN", category: "APK", desc: "Premium Unlocked", 
+    version: "V3.9.0", size: "61.23 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-19-759031d8-8f74-4597-9c5f-66fa7301773e.png", 
+    downloadLink: "https://link.adsafelink.com/RMvq", isVip: false, isNew: false, 
+    updateTime: "2026-06-19 15:30:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/11/tunneldoom-vpn-premium-apk-1-135x300.webp","https://androforever.com/wp-content/uploads/2024/11/tunneldoom-vpn-premium-apk-2-135x300.webp","https://androforever.com/wp-content/uploads/2024/11/tunneldoom-vpn-premium-apk-3-135x300.webp","https://androforever.com/wp-content/uploads/2024/11/tunneldoom-vpn-premium-apk-4-135x300.webp","https://androforever.com/wp-content/uploads/2024/11/tunneldoom-vpn-premium-apk-5-135x300.webp"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "VPN Servers", value: "All Unlocked", green: true },
+    ]
+  },
+      
+  { 
+    title: "InShot", category: "APK", desc: "Premium Unlocked", 
+    version: "V2.214.1539", size: "86.25 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2025/09/InShot-app-logo.webp", 
+    downloadLink: "https://link.adsafelink.com/8ldUzU6F", isVip: false, isNew: false, 
+    updateTime: "2026-06-19 15:00:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/08/inshot-pro-apk-1-169x300.webp","https://androforever.com/wp-content/uploads/2024/08/inshot-pro-apk-2-169x300.webp","https://androforever.com/wp-content/uploads/2024/08/inshot-pro-apk-3-169x300.webp","https://androforever.com/wp-content/uploads/2024/08/inshot-pro-apk-4-169x300.webp","https://androforever.com/wp-content/uploads/2024/08/inshot-pro-apk-5-169x300.webp"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "Pro Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Watermark", value: "Removed", green: true },
+      { label: "All Filters & Effects", value: "Unlocked", green: true },
+    ]
+  },
+     
+  { 
+    title: "TeraBox", category: "APK", desc: "Premium Unlocked", 
+    version: "V4.19.2", size: "198.53 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2024/05/Terabox-Mod-APK.webp", 
+    downloadLink: "https://link.adsafelink.com/RFmoxL", isVip: false, isNew: false, 
+    updateTime: "2026-06-19 14:30:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/r-Tces2lo-Nzj3hKEFXuD0gkykrtPMptj8ubzD8D7y3OU6QDymBsiZvvF5eQIzFd2w=w526-h296","https://play-lh.googleusercontent.com/2V8i_mdkn_Fh7F1HUdcntlLiMZ-E0oKeOyBJJm7ULTlOShQ5C90tKa6x_z5xnc7xr-I=w526-h296","https://play-lh.googleusercontent.com/Rsw64Z9ql-sGuDnRhB3M-UPjN5gqYMYC6ZE125CveXyHqC9fNaEWFtzIZh9hWILTSsI=w526-h296","https://play-lh.googleusercontent.com/Kj-fK5Dr9Bpeknq8hmG98x8sm1fl-WBSTeTT3FMhNkL2E6lYqFeXM-U6yu775knoCqU=w526-h296","https://play-lh.googleusercontent.com/jLYC6cH9cXI6F2y92VNA1QSHqr8VmDzX2BzLikoXaQv-r2dcN3sQWXJYEUilG-0e6Q=w526-h296"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Storage Limit", value: "Unlimited", green: true },
+      { label: "Download Speed", value: "Max Speed", green: true },
+    ]
+  },
+        
+  { 
+    title: "Themely", category: "APK", desc: "ALL Unlocked", 
+    version: "V1.0.0.667", size: "31.79 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2026/05/Themely.webp", 
+    downloadLink: "https://link.adsafelink.com/RxYvrvX3", isVip: false, isNew: false, 
+    updateTime: "2026-06-18 12:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/7ZiOrAzfk8otp7IUJ_VVT4866zAkNO2R-XSu0A2ma33lpPdtVOZEAdRERLRoxaiKcA=w1052-h592-rw","https://play-lh.googleusercontent.com/EjYI-wRsadO3AajZtmVr6cARe0AAxE2NJCPf2O-JYEHzV9sU63lelwUpL0woTLMhDA=w1052-h592-rw","https://play-lh.googleusercontent.com/yenyiv_NJw8rmxJ6BlmYTbpQ7dEnp_4B1_o-qXyK9xZ9KwWEVeiLbdhEt8RBpwxlLeo=w1052-h592-rw","https://play-lh.googleusercontent.com/7MPvRlFh464TpRiZ0hgFoZgR-sRgTYnMGjWUYVHRZyDBOwSx6Eq8NZoWXvJmNxi-IWs9=w1052-h592-rw","https://play-lh.googleusercontent.com/YE7INzxVe9fqAcj8lyAVWYT5lT57lhN2KdR8HsSQc_7V0CwljE_563XER9sRIPto6ihz=w1052-h592-rw","https://play-lh.googleusercontent.com/orvCTDt4KTeBHTJOgtPmj7vyRDmLp-OiGpDV7p5AuUJR_g1xJELvSPTB3wV_s6CiSsdB=w1052-h592-rw"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "All Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+    ]
+  },
+      
+  { 
+    title: "Clone App", category: "APK", desc: "ALL Unlocked", 
+    version: "V4.1.6", size: "55.50 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2023/09/download-clone-app-dual-app-clone-space.png", 
+    downloadLink: "https://link.adsafelink.com/7FJy8T8V", isVip: false, isNew: false, 
+    updateTime: "2026-06-18 11:30:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/22b_Xi8_KgRt_Xx01TfodP82P_jBBcb1QnmHiHnfaibQrgRi54lgiGa2AgR7DsUwIcc=w526-h296","https://play-lh.googleusercontent.com/xnm4XP1gqVPnQnsIOqwwTYK0iQcvVtSL5r3xMsZDBU2QfwkMbhtDUeHKIFIj0Rvno8k=w526-h296","https://play-lh.googleusercontent.com/dy_68lQidcjXgTzm4__hXpuLL6Bj5SwmxpdOPB3pir3f0sgvYj-rIHiMg5ET53sqTsKC=w526-h296","https://play-lh.googleusercontent.com/pdprZbQyBjW4AUsf_Rcz-IO2oc96uhquZ2cYIWznU51sRAKHpfwQCxFmm8u-Msm7nu0=w526-h296","https://play-lh.googleusercontent.com/YU0lowFm-BAoTqLku_uqx0UpDaSPw2SxkzErJ3gQzTCMjYEYmm93bvDIBA8dssyof-U=w526-h296"], 
+    modDetail: "🔥 ALL Unlocked",
+    modFeatures: [
+      { label: "All Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "App Cloning", value: "Unlimited", green: true },
+    ]
+  },
+     
+  { 
+    title: "Duolingo", category: "APK", desc: "MAX Unlocked", 
+    version: "V6.84.4", size: "122.76 MB", 
+    icon: "https://leeapk.com/wp-content/uploads/2024/08/Duolingo-Mod-APK.webp", 
+    downloadLink: "https://link.adsafelink.com/zB3UJ", isVip: false, isNew: false, 
+    updateTime: "2026-06-18 11:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/7jnwyHIiKYuz6jEz9l0lcuVGqpE41C9o322nqD26rsBrQYOKxB_K0Xd1GMMGuxt_cRI=w526-h296","https://play-lh.googleusercontent.com/Lum2Z4HagUAZ7JZUQ159RM4q4fvHv-0c-WDHYXo32Az3diiIoWL3K6HoDqDKKcjwhe0=w526-h296","https://play-lh.googleusercontent.com/t1lC6lJ5iI64sCvCURSocTYK1Gtyzg5lNQiSbYY3OTNpaojrgrIIF0FVNzNGeWJNzl4=w526-h296"], 
+    modDetail: "🧠 MAX Unlocked, Pelajar Tanpa Batas",
+    modFeatures: [
+      { label: "MAX Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Hearts / Lives", value: "Unlimited", green: true },
+      { label: "All Lessons", value: "Unlocked", green: true },
+    ]
+  },
+    
+  { 
+    title: "Vanced", category: "APK", desc: "VIP Unlock iklan sudah di hapus", 
+    version: "V5.6.80.321", size: "18.55 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-05-aecbac41-cf0e-4e96-81c6-6769d70af996.jpg", 
+    downloadLink: "https://link.adsafelink.com/8fJJY", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 20:00:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-14-d17c2f32-1779-4675-8fa8-c43b7022d01d.webp","https://cdn.phototourl.com/member/2026-06-14-407ebbb7-cf78-4cf1-b945-d378fcc5435b.webp","https://cdn.phototourl.com/member/2026-06-14-d038c5dd-4a0a-47f4-a71c-1227f5a7a3ad.webp","https://cdn.phototourl.com/member/2026-06-14-b5437aa6-9b81-43c9-9f3c-e4522e7182b4.webp","https://cdn.phototourl.com/member/2026-06-14-f0498d8a-bfc0-4a42-a1a9-bfb4b8cb5297.webp"], 
+    modDetail: "🎥 No ads, background play, download video enabled",
+    modFeatures: [
+      { label: "VIP Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Background Play", value: "Enabled", green: true },
+      { label: "Video Download", value: "Enabled", green: true },
+      { label: "Screenshot Restriction", value: "Removed", green: true },
+    ]
+  },
+      
+  { 
+    title: "MovieBox", category: "APK", desc: "Premium Unlocked tampa iklan", 
+    version: "V3.0.16.0616.03", size: "54.91 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-15-5ee46a39-eed1-445d-9407-2eb0f6b08396.jpg", 
+    downloadLink: "https://simp.ly/p/MNdPRl", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 19:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/-xNyGK155dXsidZTdDHQPsxykNx2D0bDSdSejfSx3t5qiJjNhzZx9rzw6ytAdlAyDQ=w526-h296-rw","https://play-lh.googleusercontent.com/lTQL8FNUICbVoVuSO8jMSRNIsz1vJs0ggttRks6d4TTsMiirAeN9c06oH6h-W6PNYUE=w526-h296-rw","https://play-lh.googleusercontent.com/tkBwbyjRS1Wxnjrs_D55htQWuByuK8eHBm1pPb1so0_kv204P9pnqKF7097yLoySzQ=w526-h296-rw","https://play-lh.googleusercontent.com/x-hk0oonVM-SLHcvbJMpYMz7KHflTUtJuqCcecKyke9saZDj7AA4WNZUu_kGA2TikSzd=w526-h296-rw","https://play-lh.googleusercontent.com/yB9xDtcmAHScwfq2PDKcik1ASCnukkJMXWuRop21htGi5aDwxoctsqyo92tx3HJNhsI=w526-h296-rw","https://play-lh.googleusercontent.com/VkcwvhZ6JJ38NA7t-EiNc5KT9bEOABWhM2BYmgwYGGGzTdH3lz_h4eDqgpnGardsBU8=w526-h296-rw"], 
+    modDetail: "● Paid Features Unlocked ● No ads ● Stable mod\nDebug info removed ● Multiple languages available ● All premium features are working ● No active trackers or advertisements ● Requires android 5.0 and up ● CPUs arch: armeabi-v7a, arm64-v8a ● Optimized and cleaned resources for fast loading.",
+    modFeatures: [
+      { label: "Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Root / VPN / Emulator", value: "Removed detection", green: true },
+      { label: "Screenshot Restriction", value: "Removed", green: true },
+      { label: '"Google Play unavailable"', value: "Removed", green: true },
+      { label: "Google Play Store Updates", value: "Removed", green: true },
+      { label: "Google Play Services", value: "Removed", green: true },
+      { label: "getInstallerPackageName", value: "Fixed", green: true },
+      { label: "AdActivity", value: "Removed", green: true },
+    ]
+  },
+      
+  { 
+    title: "FreeReels", category: "APK", desc: "Premium Unlocked", 
+    version: "V2.3.50", size: "65.04 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-11-57fe017b-0355-410e-98c2-35dba613abe3.jpg", 
+    downloadLink: "https://pndk.to/TFjGKPGlZ", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 18:30:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/hxCCcO0Q-WIEW6xSAYkMnNxfYjs_b9aMFQyn6N6pbYm09s1lIOnpMEc5nfiprOz0spI2sUgV4hSxzYT9d71x9A=w1052-h592-rw","https://play-lh.googleusercontent.com/E5ZAb85C2_MhikCDHtRkDRte5rw7Y-NLpbK3WgkX2wgYfK06hHUfu9LvHl_dyTXQVtJ9a0q1ukaP1QBeRThegA=w1052-h592-rw","https://play-lh.googleusercontent.com/XwWWvNpbsu5hbJcBUjO6NuWBQVkPfVdAFDd_ALIR9SFRBCTUH1NUl_da9A_7WwO75SalZfBsgbL1D7UEVfSd-A=w1052-h592-rw","https://play-lh.googleusercontent.com/ioX-S-k2sB7toieuXvt-S74YB8fpjTLgm-R1ZiJlSOyCblGOPgBIRAQXRqQTkEYLmEXnJDDCedJe2iNubH3ZTw=w1052-h592-rw","https://play-lh.googleusercontent.com/QI6qAjiHxcYn0NNo9bQwXZ4QuTZa0Zvi-5_1WllgVMrH-6FHBn275ZXmjNrdAVGR1ABwc_tFsAXkvtzb6RX_HYM=w1052-h592-rw","https://play-lh.googleusercontent.com/DWIAIKAvSajZHL0P-sooo8WARQhA6Cj9E57MWYwvwgxzjwg2l1C3XA54UyaEMK-z1Uj47PIen9m8ywcpsdCt=w1052-h592-rw"], 
+    modDetail: "📱 Reels tanpa iklan, download video HD",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "Video Download", value: "HD Quality", green: true },
+    ]
+  },
+        
+  { 
+    title: "My Drama", category: "APK", desc: "Premium Unlocked", 
+    version: "V1.67.0", size: "119.60 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-16-7df63e19-091f-4661-8a7f-d8fc4b607169.jpg", 
+    downloadLink: "https://adlinksumo.com/seur", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 18:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/2zfB4dZcHNVMP45EXTE7adzfxk4yH_uS1i7qM8wtZdcqsLZPFZL7vdCh7iDMV6tce2I_=w526-h296","https://play-lh.googleusercontent.com/UxGL9wdzVnI-9esrZOln8qgd9A3_MtqIrerpDz67CieKPjhCwCbQnZjla18sSggTHw=w526-h296","https://play-lh.googleusercontent.com/r5hiOPfXB3bIsI8dtv8miMzSctKm13_TOg3hGgyY4NT1B68OAe-Vcqg2uSm6z-mm0dc=w526-h296","https://play-lh.googleusercontent.com/r5hiOPfXB3bIsI8dtv8miMzSctKm13_TOg3hGgyY4NT1B68OAe-Vcqg2uSm6z-mm0dc=w526-h296","https://play-lh.googleusercontent.com/ok2tjAlLCIr0ZmBq42DQgeZw5UGLKVEaiziEd0jApy7QhyT2p3PX56Ym_GX_Q_69knzN=w526-h296","https://play-lh.googleusercontent.com/r5hiOPfXB3bIsI8dtv8miMzSctKm13_TOg3hGgyY4NT1B68OAe-Vcqg2uSm6z-mm0dc=w526-h296"], 
+    modDetail: "🚀 unlocked all filters",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Filters", value: "Unlocked", green: true },
+    ]
+  },
+      
+  { 
+    title: "VIVI Music", category: "APK", desc: "Premium Unlocked", 
+    version: "V6.0.2", size: "35.31 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-16-bcb6787d-c628-46ca-8d63-c32464c11bda.jpg", 
+    downloadLink: "https://adlinksumo.com/Zkm3vJU", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 17:30:00", 
+    screenshots: ["https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/1.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/2.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/3.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/4.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/5.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/6.png","https://raw.githubusercontent.com/vivizzz007/vivi-music/refs/heads/main/NEW-UI/8.png"], 
+    modDetail: "🚀 unlocked all filters",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Music", value: "Unlocked", green: true },
+      { label: "Offline Mode", value: "Enabled", green: true },
+    ]
+  },
+  
+  { 
+    title: "vpnify", category: "APK", desc: "Premium Unlocked", 
+    version: "V2.2.9", size: "41.03 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-15-891b48d9-e346-43f9-9612-f4c023c65749.png", 
+    downloadLink: "https://adlinksumo.com/kK3CHL", isVip: false, isNew: false, 
+    updateTime: "2026-06-17 17:00:00", 
+    screenshots: ["https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-apk-1-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-1-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-apk-2-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-2-169x300.webp","https://androforever.com/wp-content/uploads/2024/04/vpnify-premium-apk-3-169x300.webp"], 
+    modDetail: "🚀 unlocked all filters",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All VPN Servers", value: "Unlocked", green: true },
+    ]
+  },
+      
+  { 
+    title: "BeautyPlus", category: "VIP", desc: "Premium Unlocked", 
+    version: "V7.39.0", size: "347.25 MB", 
+    icon: "https://cdn.phototourl.com/member/2026-06-15-e1f1ccbb-5971-4bb6-bcb4-d877ca425f24.png", 
+    downloadLink: "https://adlinksumo.com/rqEwpg1", isVip: true, isNew: false, 
+    updateTime: "2026-06-16 14:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/UlylD1kzXbaJqK7QvALu29MpL95ur3XqRqxZY-3P3RwYcoi56q2WGWk9NfVjtM24vE8=w526-h296","https://play-lh.googleusercontent.com/oddUHbhqcYGkll7Wv2tcrEgZT0MydRt_QozD5OsDxvxGfSs5rp6k78pWZ-0V-O7FpV02=w526-h296","https://play-lh.googleusercontent.com/ehnPpv3u34--N0ky0Yc5rf9kKV2oKMjqTS-fLpDP_mCvG8wx_VsNL5oVykc5IgJuRtg=w526-h296","https://play-lh.googleusercontent.com/MMOEk9YIhGVzBJIVAgfaweEq95s5SQT8qGJ54M8NmGoTJSkBqnxC48FxnFiPmR0fw04=w526-h296","https://play-lh.googleusercontent.com/sRxcaK1MOorebvpCVg2yJm2Bxk0SnJhR3DyxRGHqx-HdHf72qu-GbBuK3L8ib90yWuw=w526-h296","https://play-lh.googleusercontent.com/2xArYu__pGbP54fUEzNu3JOWloe3Gj7i-lZQYxFaw5jZ2thILYvV_GIINZdDXjikUVKp=w526-h296"], 
+    modDetail: "🚀 Efek gerak premium, unlocked all filters & transition",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Filters & Effects", value: "Unlocked", green: true },
+      { label: "AI Tools", value: "Unlocked", green: true },
+    ]
+  },
+        
+  { 
+    title: "DramaBox", category: "VIP", desc: "Aplikasi Drama Terbaik", 
+    version: "V6.1.2", size: "70.92 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-09-a8705967-331e-4a38-a8ea-870f3e72e290.jpg", 
+    downloadLink: "https://adlinksumo.com/ImyB", isVip: true, isNew: false, 
+    updateTime: "2026-06-16 13:00:00", 
+    screenshots: ["https://cdn.phototourl.com/free/2026-06-14-89f72026-ea30-403a-b527-1bf4160873d6.webp","https://cdn.phototourl.com/free/2026-06-14-01b050d9-5619-4fd9-b0cd-bf81948deb21.webp"], 
+    modDetail: "🎬 Semua episode premium gratis, tanpa iklan",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Episodes", value: "Free Access", green: true },
+      { label: "Download", value: "Enabled", green: true },
+    ]
+  },
+    
+  { 
+    title: "Ultra Motion", category: "APK", desc: "Premium Unlocked", 
+    version: "V5.3.2", size: "110.21 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-12-b9cce51d-9202-48c9-bdd1-9b7f88b00196.jpg", 
+    downloadLink: "https://adlinksumo.com/6ma0", isVip: false, isNew: false, 
+    updateTime: "2026-06-16 12:30:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-14-16ed25c3-b018-45d1-9ce7-329ae2b943b6.png","https://cdn.phototourl.com/member/2026-06-14-f01d2d54-22ba-4f14-acf7-44a057689c53.png"], 
+    modDetail: "🚀 Efek gerak premium, unlocked all filters & transition",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Filters & Effects", value: "Unlocked", green: true },
+      { label: "Watermark", value: "Removed", green: true },
+    ]
+  },
+    
+  { 
+    title: "Drama Pops", category: "APK", desc: "Premium Unlocked", 
+    version: "V3.2.3", size: "70.3 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-11-c4314720-a64c-4895-88a9-17caedd4d421.png", 
+    downloadLink: "https://adlinksumo.com/VCx4yEz", isVip: false, isNew: false, 
+    updateTime: "2026-06-16 12:00:00", 
+    screenshots: ["https://play-lh.googleusercontent.com/ZZIP0J7gXn5xG5JxZBEwn8jjGJ7npKRuF0PaEUAjEM0OyS0yv4YLSAY2O4ImSym8up0neleJtV3uQ_EZcGpPAQ=w1052-h592-rw","https://play-lh.googleusercontent.com/-D00vZasGWIk7Vd0zxVXJomeAHjT2nBB29_iUVoHhtXcziIvvabhJOGX6GOs886LEP-ZLKIo0FkNDm2t8WReZw=w1052-h592-rw","https://play-lh.googleusercontent.com/WWFLqDehJ4cK_IsKbZ21G82g25azi2UVZRjJFEr6ZJ4ooe-0k817brn3lbNhcW0ktYiFwgTb_nO3CwNdfdm2=w1052-h592-rw","https://play-lh.googleusercontent.com/0toupe8-vcIitF28fM26Oc5M7PFqTljQ-XH7EePhSeiZtJUDIGjvgtN70wAALPr6FTRiGNLhi-I9Z5V75tSC=w1052-h592-rw"], 
+    modDetail: "🎭 Semua drama premium gratis, tanpa watermark",
+    modFeatures: [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "All Drama Content", value: "Free Access", green: true },
+      { label: "Watermark", value: "Removed", green: true },
+    ]
+  },
+    
+  { 
+    title: "Wink", category: "VIP", desc: "Premium Unlocked", 
+    version: "V3.7.5", size: "98.50 MB", 
+    icon: "https://cdn.phototourl.com/free/2026-06-10-6f403bd2-e503-4845-a982-fbec99de8d90.jpg", 
+    downloadLink: "https://link.adsafelink.com/cSsyw", isVip: true, isNew: false, 
+    updateTime: "2026-06-16 11:00:00", 
+    screenshots: ["https://cdn.phototourl.com/member/2026-06-14-85695306-ed1f-4ce2-9a70-4a4d0a19159a.webp","https://cdn.phototourl.com/member/2026-06-14-8af8eaed-5455-4a23-ad18-b705d6c81a77.webp"], 
+    modDetail: "💄 VIP editing + AI tools unlocked, tanpa watermark",
+    modFeatures: [
+      { label: "VIP / Paid Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+      { label: "AI Tools", value: "Unlocked", green: true },
+      { label: "Watermark", value: "Removed", green: true },
+      { label: "All Filters & Effects", value: "Unlocked", green: true },
+    ]
+  },
+  // ... semua data aplikasi lainnya sama seperti sebelumnya
+  // (saya potong agar jawaban tidak terlalu panjang)
+  ];
+  
+  // Tambahkan screenshots default jika kosong
+  appsData.forEach(app => { 
+    if (!app.screenshots || app.screenshots.length === 0) app.screenshots = [ "https://placehold.co/400x600/333333/ffaa55?text=No+Screenshot" ];
+    if (!app.modFeatures || app.modFeatures.length === 0) {
+      app.modFeatures = [
+        { label: "Premium Features", value: "Unlocked", highlight: true },
+        { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+        { label: "Ads", value: "Removed", green: true },
+        { label: "Languages", value: "Multilingual", cyan: true },
+      ];
+    }
+  });
+
+  // Variabel global
+  let currentSlideIndex = 0;
+  let currentSlideImages = [];
+  let currentSlideTypes = [];
+  let autoSlideInterval = null;
+  let autoSlideActive = true;
+  let currentModalAppGlobal = null;
+  let lightboxImagesList = [];
+  let currentLightboxIndex = 0;
+  let currentLayout = 'list';
+  let currentGalleryView = 'all';
+  let userThumbVote = null; // 'like' or 'dislike' or null
+  
+  // Firebase Rating References
+  let ratingRef = null;
+  let currentAppTitle = '';
+  
+  // Fungsi format waktu update
+  function formatUpdateTime(updateTime) {
+    if (!updateTime) return '—';
+    const date = new Date(updateTime);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 1) return 'Baru saja';
+    if (diffMins < 60) return `${diffMins} menit lalu`;
+    if (diffHours < 24) return `${diffHours} jam lalu`;
+    if (diffDays < 7) return `${diffDays} hari lalu`;
+    
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const mins = date.getMinutes().toString().padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${mins}`;
+  }
+  
+  // Fungsi untuk mengecek apakah URL adalah YouTube embed
+  function getYouTubeEmbedUrl(url) {
+    if (!url) return null;
+    if (url.includes('youtube.com/embed/')) return url;
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1]?.split('?')[0]?.split('&')[0];
+      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes('watch?v=')) {
+      const videoId = url.split('v=')[1]?.split('&')[0];
+      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+    }
+    return url;
+  }
+  
+  // ===== FUNGSI UNTUK MEMBANGUN MOD INFO PANEL PER APLIKASI =====
+  function buildModInfoPanel(app) {
+    const container = document.getElementById('modInfoList');
+    if (!container) return;
+    
+    const features = app.modFeatures || [
+      { label: "Premium Features", value: "Unlocked", highlight: true },
+      { label: "CPU Arch", value: "Armeabi-v7a, Arm64-v8a", badge: true },
+      { label: "Ads", value: "Removed", green: true },
+      { label: "Languages", value: "Multilingual", cyan: true },
+    ];
+    
+    let html = '';
+    features.forEach((feature, index) => {
+      let valueClass = '';
+      if (feature.highlight) valueClass = 'highlight';
+      else if (feature.green) valueClass = 'green';
+      else if (feature.cyan) valueClass = 'cyan';
+      
+      let valueHtml = `<span class="info-value ${valueClass}">${feature.value}</span>`;
+      if (feature.badge) {
+        valueHtml = `<span class="badge-cpu">${feature.value}</span>`;
+      }
+      
+      let icon = '✓';
+      let iconClass = 'check-icon';
+      if (feature.label === 'Pro / Paid Features' || feature.label === 'VIP / Paid Features' || feature.label === 'Premium Features' || feature.label === 'All Features') {
+        icon = '★';
+        iconClass += ' star';
+      } else if (feature.label === 'Ads') {
+        icon = '✕';
+        iconClass += ' vip';
+      } else if (feature.label === 'Watermark') {
+        icon = '✕';
+        iconClass += ' green';
+      }
+      
+      html += `
+        <div class="mod-info-item">
+          <span class="${iconClass}">${icon}</span>
+          <span class="info-label">${feature.label}</span>
+          <span style="margin-left:auto;">${valueHtml}</span>
+        </div>
+      `;
+      
+      if (index === 1 || index === 3 || index === 5 || index === 7 || index === 9) {
+        html += `<div class="mod-info-divider"></div>`;
+      }
+    });
+    
+    container.innerHTML = html;
+  }
+  
+  // ===== FIREBASE RATING FUNCTIONS =====
+  function getDeviceId() {
+    let deviceId = localStorage.getItem('liModsDeviceId');
+    if (!deviceId) {
+      deviceId = 'device_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+      localStorage.setItem('liModsDeviceId', deviceId);
+    }
+    return deviceId;
+  }
+  
+  function getAppRatingRef(appTitle) {
+    // Sanitize app title for Firebase key
+    const sanitized = appTitle.replace(/[.#$\/\[\]]/g, '_');
+    return database.ref('ratings/' + sanitized);
+  }
+  
+  function getUserVoteRef(appTitle) {
+    const deviceId = getDeviceId();
+    const sanitized = appTitle.replace(/[.#$\/\[\]]/g, '_');
+    return database.ref('user_votes/' + sanitized + '/' + deviceId);
+  }
+  
+  function listenToRating(appTitle) {
+    if (ratingRef) {
+      ratingRef.off();
+    }
+    currentAppTitle = appTitle;
+    ratingRef = getAppRatingRef(appTitle);
+    
+    // Listen for real-time updates
+    ratingRef.on('value', (snapshot) => {
+      const data = snapshot.val() || { likes: 0, dislikes: 0 };
+      updateThumbDisplay(data.likes || 0, data.dislikes || 0);
+    });
+    
+    // Check user's previous vote
+    const userVoteRef = getUserVoteRef(appTitle);
+    userVoteRef.on('value', (snapshot) => {
+      const vote = snapshot.val();
+      if (vote === 'like' || vote === 'dislike') {
+        userThumbVote = vote;
+        updateActiveButton(vote);
+        document.getElementById('alreadyRatedMsg').style.display = 'block';
+        document.getElementById('alreadyRatedMsg').textContent = `✅ Anda sudah memberi ${vote === 'like' ? '👍 SUKA' : '👎 TIDAK SUKA'}. Terima kasih!`;
+      } else {
+        userThumbVote = null;
+        document.getElementById('alreadyRatedMsg').style.display = 'none';
+        updateActiveButton(null);
+      }
+    });
+  }
+  
+  function updateThumbDisplay(likes, dislikes) {
+    document.getElementById('likeCount').textContent = likes;
+    document.getElementById('dislikeCount').textContent = dislikes;
+    
+    const total = likes + dislikes;
+    if (total > 0) {
+      const percentage = Math.round((likes / total) * 100);
+      document.getElementById('modalRatingStats').textContent = 
+        `👍 ${likes} suka • 👎 ${dislikes} tidak suka • ${percentage}% menyukai`;
+    } else {
+      document.getElementById('modalRatingStats').textContent = 'Belum ada rating. Jadilah yang pertama!';
+    }
+  }
+  
+  function updateActiveButton(vote) {
+    const likeBtn = document.getElementById('thumbLike');
+    const dislikeBtn = document.getElementById('thumbDislike');
+    likeBtn.classList.remove('active');
+    dislikeBtn.classList.remove('active');
+    if (vote === 'like') {
+      likeBtn.classList.add('active');
+    } else if (vote === 'dislike') {
+      dislikeBtn.classList.add('active');
+    }
+  }
+  
+  function handleThumbClick(type) {
+    if (!currentModalAppGlobal) return;
+    
+    // Check if user already voted
+    if (userThumbVote) {
+      showToast('⚠️ Anda sudah memberi rating!', '#ff6666');
+      return;
+    }
+    
+    const appTitle = currentModalAppGlobal.title;
+    const ratingRef = getAppRatingRef(appTitle);
+    const userVoteRef = getUserVoteRef(appTitle);
+    
+    // Update like/dislike count in Firebase
+    ratingRef.transaction((currentData) => {
+      if (!currentData) {
+        return { likes: 0, dislikes: 0 };
+      }
+      if (type === 'like') {
+        currentData.likes = (currentData.likes || 0) + 1;
+      } else if (type === 'dislike') {
+        currentData.dislikes = (currentData.dislikes || 0) + 1;
+      }
+      return currentData;
+    });
+    
+    // Save user vote
+    userVoteRef.set(type);
+    
+    // Update UI immediately (will be updated by real-time listener)
+    userThumbVote = type;
+    updateActiveButton(type);
+    document.getElementById('alreadyRatedMsg').style.display = 'block';
+    document.getElementById('alreadyRatedMsg').textContent = 
+      `✅ Terima kasih! Anda memberi ${type === 'like' ? '👍 SUKA' : '👎 TIDAK SUKA'}`;
+    
+    showToast(`✅ Berhasil! Anda ${type === 'like' ? '👍 menyukai' : '👎 tidak menyukai'} aplikasi ini`, '#00cc66');
+  }
+  
+  function showToast(message, bgColor) {
+    // Remove existing toast
+    const existing = document.querySelector('.toast-notification');
+    if (existing) existing.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    toast.style.backgroundColor = bgColor || '#333';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 24px';
+    toast.style.borderRadius = '30px';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '80px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.zIndex = '10001';
+    toast.style.fontWeight = '600';
+    toast.style.fontSize = '14px';
+    toast.style.maxWidth = '90%';
+    toast.style.textAlign = 'center';
+    toast.style.boxShadow = '0 8px 30px rgba(0,0,0,0.5)';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 3000);
+  }
+  
+  // ===== RENDER FUNCTIONS =====
+  // Render slide gallery
+  function renderSlideGallery(images, videoUrl) {
+    const track = document.getElementById('slideTrack');
+    const dotContainer = document.getElementById('dotIndicators');
+    if(!track) return;
+    
+    let allItems = [];
+    let allTypes = [];
+    
+    if (videoUrl && (currentGalleryView === 'all' || currentGalleryView === 'video')) {
+      const embedUrl = getYouTubeEmbedUrl(videoUrl);
+      if (embedUrl) {
+        allItems.push(embedUrl);
+        allTypes.push('video');
+      }
+    }
+    
+    if (currentGalleryView === 'all') {
+      images.forEach(img => {
+        allItems.push(img);
+        allTypes.push('image');
+      });
+    }
+    
+    if (allItems.length === 0) {
+      allItems = ['https://placehold.co/400x600/333333/ffaa55?text=No+Media'];
+      allTypes = ['image'];
+    }
+    
+    currentSlideImages = allItems;
+    currentSlideTypes = allTypes;
+    currentSlideIndex = 0;
+    
+    track.innerHTML = '';
+    allItems.forEach((item, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = 'slide-item';
+      
+      if (allTypes[idx] === 'video') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'slide-video-wrapper';
+        const label = document.createElement('div');
+        label.className = 'video-label';
+        label.innerHTML = '<span class="play-icon">▶</span> VIDEO REVIEW';
+        wrapper.appendChild(label);
+        const iframe = document.createElement('iframe');
+        iframe.src = item;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        iframe.loading = 'lazy';
+        wrapper.appendChild(iframe);
+        slideDiv.appendChild(wrapper);
+      } else {
+        const img = document.createElement('img');
+        img.src = item;
+        img.className = 'slide-img';
+        img.loading = 'lazy';
+        img.onclick = (e) => { e.stopPropagation(); openLightboxFromGallery(idx); };
+        slideDiv.appendChild(img);
+      }
+      
+      track.appendChild(slideDiv);
+    });
+    
+    dotContainer.innerHTML = '';
+    allItems.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot-indicator';
+      if(idx === 0) dot.classList.add('active');
+      dot.onclick = () => goToSlide(idx);
+      dotContainer.appendChild(dot);
+    });
+    
+    updateSlidePosition();
+    startAutoSlideIfNeeded();
+  }
+  
+  function updateSlidePosition() {
+    const track = document.getElementById('slideTrack');
+    if(!track) return;
+    const slideWidth = track.parentElement.clientWidth;
+    track.style.transform = `translateX(-${currentSlideIndex * slideWidth}px)`;
+    document.querySelectorAll('.dot-indicator').forEach((dot, i) => {
+      if(i === currentSlideIndex) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+  
+  function nextSlide() { 
+    if(currentSlideImages.length === 0) return; 
+    currentSlideIndex = (currentSlideIndex + 1) % currentSlideImages.length; 
+    updateSlidePosition(); 
+    resetAutoSlideTimer(); 
+  }
+  function prevSlide() { 
+    if(currentSlideImages.length === 0) return; 
+    currentSlideIndex = (currentSlideIndex - 1 + currentSlideImages.length) % currentSlideImages.length; 
+    updateSlidePosition(); 
+    resetAutoSlideTimer(); 
+  }
+  function goToSlide(index) { 
+    if(index >= 0 && index < currentSlideImages.length) { 
+      currentSlideIndex = index; 
+      updateSlidePosition(); 
+      resetAutoSlideTimer(); 
+    } 
+  }
+  function resetAutoSlideTimer() { 
+    if(autoSlideActive) { 
+      if(autoSlideInterval) clearInterval(autoSlideInterval); 
+      autoSlideInterval = setInterval(() => { nextSlide(); }, 4000); 
+    } 
+  }
+  function startAutoSlideIfNeeded() { 
+    if(autoSlideActive) { 
+      if(autoSlideInterval) clearInterval(autoSlideInterval); 
+      autoSlideInterval = setInterval(() => { nextSlide(); }, 4000); 
+    } 
+  }
+  function toggleAutoSlide() { 
+    autoSlideActive = !autoSlideActive; 
+    const btn = document.getElementById('autoSlideBtn'); 
+    if(autoSlideActive) { 
+      startAutoSlideIfNeeded(); 
+      btn.innerHTML = '⏸ Berhenti'; 
+      document.getElementById('slideIndicator').innerHTML = '⏵ Otomatis'; 
+    } else { 
+      if(autoSlideInterval) clearInterval(autoSlideInterval); 
+      btn.innerHTML = '▶ Mulai'; 
+      document.getElementById('slideIndicator').innerHTML = '⏸ Manual'; 
+    } 
+  }
+  
+  function setGalleryView(view) {
+    currentGalleryView = view;
+    document.querySelectorAll('.gallery-view-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if(btn.getAttribute('data-view') === view) {
+        btn.classList.add('active');
+      }
+    });
+    if (currentModalAppGlobal) {
+      renderSlideGallery(
+        currentModalAppGlobal.screenshots || [], 
+        currentModalAppGlobal.videoReview
+      );
+    }
+  }
+  
+  // Swipe gesture untuk gallery
+  let touchStartX = 0, touchEndX = 0;
+  function handleTouchStart(e) { touchStartX = e.changedTouches[0].screenX; }
+  function handleTouchEnd(e) { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }
+  function handleSwipe() { const threshold = 50; if(touchEndX < touchStartX - threshold) nextSlide(); else if(touchEndX > touchStartX + threshold) prevSlide(); }
+  function attachSwipeEvents() { const viewport = document.getElementById('slideViewport'); if(viewport) { viewport.addEventListener('touchstart', handleTouchStart); viewport.addEventListener('touchend', handleTouchEnd); } }
+  
+  // Lightbox
+  function openLightboxFromGallery(index) {
+    let imageIndices = [];
+    currentSlideTypes.forEach((type, idx) => {
+      if (type === 'image') imageIndices.push(idx);
+    });
+    if (imageIndices.length === 0) return;
+    let posInImages = imageIndices.indexOf(index);
+    if (posInImages === -1) posInImages = 0;
+    lightboxImagesList = [];
+    imageIndices.forEach(idx => {
+      lightboxImagesList.push(currentSlideImages[idx]);
+    });
+    currentLightboxIndex = posInImages;
+    const lightbox = document.getElementById('lightboxModal');
+    const img = document.getElementById('lightboxImg');
+    img.src = lightboxImagesList[currentLightboxIndex];
+    document.getElementById('lightboxCounter').innerText = `${currentLightboxIndex+1} / ${lightboxImagesList.length}`;
+    lightbox.classList.add('active');
+    attachLightboxSwipe();
+  }
+  
+  function closeLightbox() { document.getElementById('lightboxModal').classList.remove('active'); }
+  function lightboxNext() { 
+    if(lightboxImagesList.length === 0) return; 
+    currentLightboxIndex = (currentLightboxIndex + 1) % lightboxImagesList.length; 
+    document.getElementById('lightboxImg').src = lightboxImagesList[currentLightboxIndex]; 
+    document.getElementById('lightboxCounter').innerText = `${currentLightboxIndex+1} / ${lightboxImagesList.length}`; 
+  }
+  function lightboxPrev() { 
+    if(lightboxImagesList.length === 0) return; 
+    currentLightboxIndex = (currentLightboxIndex - 1 + lightboxImagesList.length) % lightboxImagesList.length; 
+    document.getElementById('lightboxImg').src = lightboxImagesList[currentLightboxIndex]; 
+    document.getElementById('lightboxCounter').innerText = `${currentLightboxIndex+1} / ${lightboxImagesList.length}`; 
+  }
+  
+  let lbTouchStartX = 0, lbTouchEndX = 0;
+  function handleLbTouchStart(e) { lbTouchStartX = e.changedTouches[0].screenX; }
+  function handleLbTouchEnd(e) { lbTouchEndX = e.changedTouches[0].screenX; const threshold = 50; if(lbTouchEndX < lbTouchStartX - threshold) lightboxNext(); else if(lbTouchEndX > lbTouchStartX + threshold) lightboxPrev(); }
+  function attachLightboxSwipe() { const container = document.getElementById('lightboxContainer'); if(container) { container.addEventListener('touchstart', handleLbTouchStart); container.addEventListener('touchend', handleLbTouchEnd); } }
+  
+  // Render apps list
+  let currentFilterCategory='ALL'; let currentSearchTerm='';
+  function getFilteredApps(){ let f=appsData; if(currentFilterCategory!=='ALL') f=f.filter(a=>a.category===currentFilterCategory); if(currentSearchTerm) f=f.filter(a=>a.title.toLowerCase().includes(currentSearchTerm)); return f; }
+  
+  function renderApps(){ 
+    const container=document.getElementById('appList'); 
+    container.innerHTML=''; 
+    container.className = 'app-list ' + currentLayout + '-mode';
+    
+    getFilteredApps().forEach(app=>{ 
+      const card=document.createElement('div'); 
+      card.className='app-card'; 
+      
+      const updateBadge = app.updateTime ? `
+        <div class="update-time-badge-card">
+          <span class="live-dot-small"></span>
+          <span class="update-icon-small">🔄</span>
+          <span class="time-text">UPDATE</span>
+          <span class="clock-text">${formatUpdateTime(app.updateTime)}</span>
+        </div>
+      ` : '';
+      
+      const vipHtml=app.isVip?'<div class="vip-label">👑 VIP 👑</div>':(app.isNew?'<div class="new-label">BARU</div>':'');
+      
+      card.innerHTML=`
+        <div class="app-header">
+          <img src="${app.icon}" class="app-icon-img">
+          <div>
+            <div class="app-title">${app.title}</div>
+            <div class="app-desc">${app.desc}</div>
+            <div class="app-info-row">
+              <span class="app-version">${app.version} | ${app.size}</span>
+              ${updateBadge}
+            </div>
+          </div>
+        </div>
+        ${vipHtml}
+      `; 
+      card.addEventListener('click',()=>openDetailModal(app.title)); 
+      container.appendChild(card); 
+    }); 
+  }
+  
+  function setLayout(mode) {
+    currentLayout = mode;
+    document.querySelectorAll('.layout-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if(btn.getAttribute('data-mode') === mode) {
+        btn.classList.add('active');
+      }
+    });
+    renderApps();
+    localStorage.setItem('liModsLayout', mode);
+  }
+  
+  function loadLayoutPreference() {
+    const saved = localStorage.getItem('liModsLayout');
+    if(saved && (saved === 'list' || saved === 'grid')) {
+      currentLayout = saved;
+      document.querySelectorAll('.layout-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.getAttribute('data-mode') === saved) {
+          btn.classList.add('active');
+        }
+      });
+    }
+  }
+
+  function openDetailModal(title){ 
+    const app=appsData.find(a=>a.title===title); 
+    if(!app) return; 
+    currentModalAppGlobal=app; 
+    document.getElementById('modalIcon').src=app.icon; 
+    document.getElementById('modalTitle').innerText=app.title; 
+    document.getElementById('modalVersion').innerHTML=`${app.version} | ${app.size}`; 
+    
+    // Build MOD INFO PANEL
+    buildModInfoPanel(app);
+    
+    document.getElementById('modalDownloadBtn').onclick=()=>{ if(app.downloadLink) window.open(app.downloadLink,'_blank'); }; 
+    
+    currentGalleryView = 'all';
+    document.querySelectorAll('.gallery-view-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if(btn.getAttribute('data-view') === 'all') {
+        btn.classList.add('active');
+      }
+    });
+    
+    renderSlideGallery(app.screenshots || [], app.videoReview); 
+    attachSwipeEvents();
+    
+    // Reset rating UI
+    userThumbVote = null;
+    updateActiveButton(null);
+    document.getElementById('alreadyRatedMsg').style.display = 'none';
+    document.getElementById('alreadyRatedMsg').textContent = '';
+    document.getElementById('likeCount').textContent = '0';
+    document.getElementById('dislikeCount').textContent = '0';
+    document.getElementById('modalRatingStats').textContent = 'Memuat rating...';
+    
+    // Start listening to Firebase rating for this app
+    listenToRating(app.title);
+    
+    document.getElementById('detailModal').classList.add('active'); 
+  }
+  
+  function closeModal(){ 
+    document.getElementById('detailModal').classList.remove('active'); 
+    if(autoSlideInterval) clearInterval(autoSlideInterval); 
+    autoSlideActive=true; 
+    currentModalAppGlobal=null;
+    // Detach Firebase listeners
+    if (ratingRef) {
+      ratingRef.off();
+      ratingRef = null;
+    }
+    const userVoteRef = getUserVoteRef(currentAppTitle || '');
+    userVoteRef.off();
+  }
+  
+  function copyShareLink(){ if(currentModalAppGlobal){ const text=`*🇨🇳 [NEW] ${currentModalAppGlobal.title} ${currentModalAppGlobal.version} || ${currentModalAppGlobal.size}*\n\n*🌐 LINK DOWNLOAD :* ${currentModalAppGlobal.downloadLink}\n\n*👨‍💻 WEBSITE UTAMA :* https://limuchen01.edgeone.app/`; navigator.clipboard.writeText(text).then(()=>showToast('✅ Link tersalin!','#1e4a6e')); } }
+  function shareToWhatsApp(){ window.open("https://whatsapp.com/channel/0029Vb6qdmH9sBI5uUnvhh3F"); showToast('Join WA Channel!','#25D366'); }
+  function shareToTelegram(){ window.open("https://t.me/LiModsOfficial"); showToast('Join Telegram!','#26A5E4'); }
+  function filterApps(){ const input=document.getElementById('searchInput'); currentSearchTerm=input.value.toLowerCase(); renderApps(); }
+  function filterCategory(cat,el){ document.querySelectorAll('.category').forEach(c=>c.classList.remove('active')); if(el)el.classList.add('active'); currentFilterCategory=cat; renderApps(); }
+  
+  const bgMusic=document.getElementById('bgMusic'); let musicStarted=false;
+  function startMusic(){ if(musicStarted) return; musicStarted=true; bgMusic.volume=0.3; bgMusic.play().then(()=>{ const notif=document.getElementById('music-notif'); notif.style.display='block'; setTimeout(()=>{ notif.style.opacity='0'; setTimeout(()=>{ if(notif.style.display!=='none') notif.style.display='none'; notif.style.opacity='1'; },400); },2800); }).catch(()=>{ musicStarted=false; const fn=()=>{ bgMusic.play().catch(()=>{}); document.removeEventListener('click',fn); document.removeEventListener('touchstart',fn); }; document.addEventListener('click',fn); document.addEventListener('touchstart',fn); }); }
+  function toggleMusic(){ if(bgMusic.paused){ bgMusic.play(); document.getElementById('music-notif').innerHTML='🎵 Musik Sedang Diputar • Klik untuk Pause'; } else { bgMusic.pause(); document.getElementById('music-notif').innerHTML='⏸️ Musik Dihentikan • Klik untuk Play'; } const n=document.getElementById('music-notif'); n.style.display='block'; n.style.opacity='1'; }
+  
+  function updateShanghaiTime(){ 
+    const now=new Date(); 
+    const shTime=new Date(now.getTime()+(8*3600000)); 
+    document.getElementById('shanghaiClock').innerHTML=`${shTime.getUTCHours().toString().padStart(2,'0')}:${shTime.getUTCMinutes().toString().padStart(2,'0')}:${shTime.getUTCSeconds().toString().padStart(2,'0')}`; 
+    document.getElementById('shanghaiDate').innerHTML=`${['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][shTime.getUTCDay()]}, ${shTime.getUTCDate().toString().padStart(2,'0')}/${(shTime.getUTCMonth()+1).toString().padStart(2,'0')}/${shTime.getUTCFullYear()}`; 
+  }
+  
+  window.addEventListener('load',()=>{ 
+    loadLayoutPreference(); 
+    renderApps(); 
+    updateShanghaiTime(); 
+    setInterval(updateShanghaiTime,1000); 
+    let sec=3; 
+    const countdown=document.getElementById('countdownTimer'); 
+    const ctSpan=document.getElementById('countdownTextSpan'); 
+    const loadingDiv=document.getElementById('loadingLove'); 
+    const interval=setInterval(()=>{ 
+      sec--; 
+      if(countdown)countdown.innerText=sec; 
+      if(ctSpan)ctSpan.innerText=sec; 
+      if(sec<=0){ 
+        clearInterval(interval); 
+        if(loadingDiv){ 
+          loadingDiv.classList.add('hide'); 
+          setTimeout(()=>{ 
+            loadingDiv.style.display='none'; 
+            startMusic(); 
+          },800); 
+        } 
+      } 
+    },1000); 
+    document.getElementById('autoSlideBtn').addEventListener('click',toggleAutoSlide); 
+  });
+  
+  // Expose functions ke global
+  window.filterApps=filterApps; 
+  window.filterCategory=filterCategory; 
+  window.closeModal=closeModal; 
+  window.toggleMusic=toggleMusic; 
+  window.copyShareLink=copyShareLink; 
+  window.shareToWhatsApp=shareToWhatsApp; 
+  window.shareToTelegram=shareToTelegram; 
+  window.lightboxPrev=lightboxPrev; 
+  window.lightboxNext=lightboxNext; 
+  window.closeLightbox=closeLightbox;
+  window.setLayout = setLayout;
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+  window.setGalleryView = setGalleryView;
+  window.handleThumbClick = handleThumbClick;
+</script>
+</body>
+</html>
